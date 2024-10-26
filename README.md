@@ -40,6 +40,9 @@ GMAP_API=your_map_api_key_here
 
 ... or publish and edit the `filament-locationpickr-field.php` config file.
 
+> [!NOTE]  
+> You can also use the apiKey option, explained below
+
 ## Preparing the models
 
 Add a `location` column to any model migration schema used for map data
@@ -138,6 +141,7 @@ use ArberMustafa\FilamentLocationPickrField\Forms\Components\LocationPickr;
             ->clickable()
             ->height('40vh')
             ->defaultLocation([41.32836109345274, 19.818383186960773])
+            ->apiKey('GOOGLE-MAPS-API-KEY-XXXXXXXXXXX')
             ->myLocationButtonLabel('My location'),
         ....
     ]);
