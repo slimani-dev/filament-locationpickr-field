@@ -27,6 +27,9 @@ class LocationPickr extends Field
 
     protected string | Closure | null $myLocationButtonLabel = null;
 
+
+    protected string | Closure $apiKey = '';
+
     private array $mapConfig = [
         'draggable' => true,
         'clickable' => false,
@@ -158,6 +161,18 @@ class LocationPickr extends Field
         return $this->evaluate($this->myLocationButtonLabel) ?? config('filament-locationpickr-field.my_location_button');
     }
 
+    public function apiKey(string | Closure $apiKey): static
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    public function getApiKey(): string
+    {
+        return $this->evaluate($this->apiKey) ?? config('filament-locationpickr-field.key');
+    }
+
     /**
      * @throws JsonException
      */
@@ -172,7 +187,7 @@ class LocationPickr extends Field
                 'controls' => $this->getMapControls(),
                 'defaultZoom' => $this->getDefaultZoom(),
                 'myLocationButtonLabel' => $this->getMyLocationButtonLabel(),
-                'apiKey' => config('filament-locationpickr-field.key'),
+                'apiKey' => $this->getApiKey(),
             ]),
             JSON_THROW_ON_ERROR
         );

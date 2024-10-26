@@ -15,11 +15,25 @@ class LocationPickr extends Entry
 
     protected string | Closure $height = '400px';
 
+    protected string | Closure $apiKey = '';
+
     public function defaultLocation(array | Closure $defaultLocation): static
     {
         $this->defaultLocation = $defaultLocation;
 
         return $this;
+    }
+
+    public function apiKey(string|Closure $apiKey): static
+    {
+        $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    public function getApiKey(): string
+    {
+        return $this->evaluate($this->apiKey) ?? config('filament-locationpickr-field.key');
     }
 
     public function getDefaultLocation(): array
@@ -78,7 +92,7 @@ class LocationPickr extends Entry
         return json_encode([
             'defaultLocation' => $this->getDefaultLocation(),
             'defaultZoom' => $this->getDefaultZoom(),
-            'apiKey' => config('filament-locationpickr-field.key'),
+            'apiKey' => $this->getApiKey(),
         ], JSON_THROW_ON_ERROR);
     }
 }
